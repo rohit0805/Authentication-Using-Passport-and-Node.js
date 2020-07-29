@@ -1,4 +1,7 @@
-<h1>hello <%=name%></h1>
-<form action="/logout?_method=DELETE" method="POST">
-    <button>LogOut</button>
-</form>
+<section class="user">
+    <%-include('./partials/messages')%>
+    <h1>Hey <span><%=name%></span></h1>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button class="logger">LogOut</button>
+    </form>
+</section>

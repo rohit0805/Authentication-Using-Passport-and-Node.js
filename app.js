@@ -32,7 +32,8 @@ app.use(methodOverride('_method'));
 app.use(function(req,res,next){
     res.locals.problem_msg=req.flash('problem'),
     res.locals.success_msg=req.flash('success'),
-    res.locals.error_msg=req.flash('error')
+    res.locals.error_msg=req.flash('error'),
+    res.locals.url=req.flash('url')
     next();
 });
 
@@ -61,10 +62,10 @@ app.get("/",function(req,res){
     res.render("index");
 });
 //2.Register route
-app.get("/register",function(req,res){
+app.get("/register",CheckNotAuthenticate,function(req,res){
     res.render("register");
 });
-app.post("/register",async function(req,res){
+app.post("/register",CheckNotAuthenticate,async function(req,res){
     const hashPassword=await bcrypt.hash(req.body.password,10);
     const user_obj={
         name:req.body.name,
@@ -98,30 +99,45 @@ app.post("/register",async function(req,res){
 });
 
 //3.Login route
-app.get("/login",function(req,res){
+app.get("/login",CheckNotAuthenticate,function(req,res){
     res.render('login');
 });
 
-app.post("/login",passport.authenticate('local',{
-    //successRedirect:'/',
+app.post("/login",CheckNotAuthenticate,passport.authenticate('local',{
+    successRedirect:'/user',
     failureRedirect:'/login',
     failureFlash:true,
     successFlash:'Logged in Successfully'
-}),function(req,res){
-    res.redirect('/user/'+req.user._id);
-});
+}));
 
 //4.Logout Route
-app.delete("/logout",function(req,res){
+app.delete("/logout",CheckAuthenticate,function(req,res){
     req.logOut();
     req.flash('success','Logged Out Successfully');
     res.redirect('/');
 });
 
 //user route
-app.get("/user/:id",function(req,res){
+app.get("/user",CheckAuthenticate,function(req,res){
     res.render('user',{name:req.user.name});
 });
+
+
+function CheckAuthenticate(req,res,next){
+    if(req.isAuthenticated())
+        return next();
+    req.flash('error','You need to be logged in first')
+    res.redirect('/login')
+};
+
+function CheckNotAuthenticate(req,res,next){
+    if(req.isAuthenticated()){
+        req.flash('error','You are already logged in');
+        return res.redirect('/user');
+    }
+    return next();
+}
+
 
 
 
