@@ -29,11 +29,14 @@ app.use(session({
 app.use(function(req,res,next){
     res.locals.problem_msg=req.flash('problem'),
     res.locals.success_msg=req.flash('success'),
-    res.locals.error_msg=req.flash('error'),
-    res.locals.register_prob=req.flash('register_prob')
+    res.locals.error_msg=req.flash('error')
     next();
 });
 
+//passport configuration
+require('./passport.config')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 //mongodb configuration
@@ -93,11 +96,25 @@ app.post("/register",async function(req,res){
 
 //3.Login route
 app.get("/login",function(req,res){
-    res.render("login");
+    res.render('login');
 });
-app.post("/login",function(req,res){
-    res.redirect('/');
+
+app.post("/login",passport.authenticate('local',{
+    //successRedirect:'/',
+    failureRedirect:'/login',
+    failureFlash:true,
+    successFlash:'Logged in Successfully'
+}),function(req,res){
+    res.redirect('/user/'+req.user._id);
 });
+
+
+//user route
+app.get("/user/:id",function(req,res){
+    res.render('user',{name:req.user.name});
+});
+
+
 
 //listen
 app.listen(PORT,console.log(`The server started at PORT ${PORT}`));
