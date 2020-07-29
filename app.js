@@ -7,6 +7,7 @@ const bcrypt=require('bcryptjs');
 const flash=require('connect-flash');
 const session=require('express-session');
 const passport=require('passport');
+const methodOverride=require('method-override');
 
 if(process.env.NODE_ENV!="production"){
     require("dotenv").config();
@@ -25,6 +26,8 @@ app.use(session({
     resave:false,
     saveUninitialized:false
 }));
+app.use(methodOverride('_method'));
+
 //global variables
 app.use(function(req,res,next){
     res.locals.problem_msg=req.flash('problem'),
@@ -108,6 +111,12 @@ app.post("/login",passport.authenticate('local',{
     res.redirect('/user/'+req.user._id);
 });
 
+//4.Logout Route
+app.delete("/logout",function(req,res){
+    req.logOut();
+    req.flash('success','Logged Out Successfully');
+    res.redirect('/');
+});
 
 //user route
 app.get("/user/:id",function(req,res){
