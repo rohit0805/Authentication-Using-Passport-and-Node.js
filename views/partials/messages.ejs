@@ -1,6 +1,26 @@
-<div class="alert_box alert_problem">
-    <p>User already exist.</p>
-    <div class="alert_destroy">
-        <button>&times;</button>
+<%if(success_msg!=""){%>
+    <div class="alert_box alert_success">
+        <p><%=success_msg%></p>
+        <div class="alert_destroy">
+            <button class="destroy">&times;</button>
+        </div>
     </div>
-</div>
+<%}%>
+
+<%if(problem_msg!=""){%>
+    <div class="alert_box alert_problem">
+        <p><%=problem_msg%></p>
+        <div class="alert_destroy">
+            <button class="destroy">&times;</button>
+        </div>
+    </div>
+<%}%>
+
+<%if(error_msg!=""){%>
+    <div class="alert_box alert_warning">
+        <p><%=error_msg%></p>
+        <div class="alert_destroy">
+            <button class="destroy">&times;</button>
+        </div>
+    </div>
+<%}%>

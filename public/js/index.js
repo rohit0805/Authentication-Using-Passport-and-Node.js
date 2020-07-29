@@ -86,18 +86,17 @@ var Controller=(function(){
                 if(name_active_alert!='0'){
                     selector.name.style.animation=`Vibrate 0.1s ease-in-out normal 5`;
                     document.querySelector(`.name_alert_${name_active_alert}`).style.display="block";
-                    RemoveAnimation()
                 }
                 if(email_active_alert!='0'){
                     document.querySelector(`.email_alert_${email_active_alert}`).style.display="block";
                     selector.email.style.animation=`Vibrate 0.1s ease-in-out normal 5`;
-                    RemoveAnimation();
                 }
                 if(pass_active_alert!='0'){
                     document.querySelector(`.pass_alert_${pass_active_alert}`).style.display="block";
                     selector.pass.style.animation=`Vibrate 0.1s ease-in-out normal 5`;
-                    RemoveAnimation();
                 }   
+                CheckFocus();
+                RemoveAnimation();
             }
         });
     };
@@ -114,6 +113,14 @@ var Controller=(function(){
             selector.pass.style.animation="";
         },1000);
     };
+    function CheckFocus(){
+        if(pass_active_alert!='0')
+            selector.pass.focus();
+        if(email_active_alert!='0')
+            selector.email.focus();
+        if(name_active_alert!='0')
+            selector.name.focus();
+    }
     return{
         init:function(){
             destroyAlert();
