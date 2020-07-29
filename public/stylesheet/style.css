@@ -22,7 +22,7 @@ body{
     align-items: center;
 }
 
-@keyframes Flow{
+@keyframes Flows{
     0%{
         background-position: 0% 0%;
     }
@@ -89,6 +89,10 @@ body{
     width:100%;
 }
 
+.wrap_input{
+    position: relative;
+}
+
 .wrap_input>input{
     width:100%;
     padding:0.75rem 2rem 0.75rem 1rem;
@@ -106,13 +110,18 @@ body{
     padding:0.75rem 1rem;
     outline:none;
     border-radius:10px;
-    background-color: rgba(0,0,0,0.3);
+    background-color: #cc4040;
     color:#ccc;
     letter-spacing: 1px;
     border:2px solid transparent;
     text-transform: uppercase;
     cursor: pointer;
     margin-top:1rem;
+    transition:0.4s;
+}
+.wrap_form>button:hover{
+    transform:scale(1.05);
+    box-shadow: 4px 4px 10px #222;
 }
 
 /*alert-box*/
@@ -156,4 +165,39 @@ body{
 }
 .alert_problem{
     background-color:rgba(153, 51, 204,0.5);
+}
+
+
+/*client-side-validation*/
+.name,.email,.password{
+    margin-bottom:1.5rem!important;
+}
+.required{
+    color:lightcoral;
+    position: absolute;
+    top:71%;
+    left:9px;
+    font-size:12px;
+}
+
+.name_alert_1,.name_alert_2,.name_alert_3,.email_alert_1,.email_alert_2,.pass_alert_1,.pass_alert_2{
+    display: none;
+}
+
+/*input box vibrate*/
+@keyframes Vibrate{
+    0%{
+        transform:translateX(5px);
+    }
+    50%{
+        transform: translateX(-5px);
+    }
+    100%{
+        transform:translateX(0);
+    }
+}
+
+/*login route*/
+.wrap_form .log_button{
+    background-color: #4040cc;
 }

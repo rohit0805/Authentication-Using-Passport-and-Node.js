@@ -3,15 +3,22 @@
     <!--Alert message here-->
     <form action="/register" method="POST" class="wrap_form">
         <div class="wrap_input">
-            <input type="text" name="name" class="name" placeholder="Name">
+            <input type="text" name="name" class="name" placeholder="Name" maxlength="50">
+            <div class="required name_alert_1">Required Field</div>
+            <div class="required name_alert_3">Minimum name length should be 3.</div>
+            <div class="required name_alert_2">Name should start with alphabet.</div>
         </div>
         <div class="wrap_input">
-            <input type="email" name="email" class="email" placeholder="Email">
+            <input type="email" name="email" class="email" placeholder="Email" maxlength="128">
+            <div class="required email_alert_1">Required Field</div>
+            <div class="required email_alert_2">Invalid email address</div>
         </div>
         <div class="wrap_input">
             <input type="password" name="password" class="password" placeholder="Password">
+            <div class="required pass_alert_1">Required Field</div>
+            <div class="required pass_alert_2">Minimum length should be 8.</div>
         </div>
-        <button>signup</button>
+        <button class="button">signup</button>
     </form>
     <p>Already Registered, click here <a href="/login">Login</a></p>
 </section>
